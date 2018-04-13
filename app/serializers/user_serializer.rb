@@ -1,3 +1,3 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :summonerName, :accountId, :profileIconId, :summonerLevel, :email
+  attributes :id, :summonerName, :accountId, :profileIconId, :summonerLevel, :email
 end
