@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  API_KEY = "RGAPI-19a63e03-1fe1-44b9-be91-f5a552d4ae08"
+  API_KEY = "RGAPI-4dbfac0f-9a91-4ba4-bfa5-923529e00677"
   BASEURL = "https://na1.api.riotgames.com/lol/summoner/v3/summoners/by-name/"
   def index
     @users = User.all
@@ -8,10 +8,10 @@ class UsersController < ApplicationController
   end
 
   def create
-    # @user = User.new(user_params)
+
     url = BASEURL + params[:summonerName] + "?api_key=" + API_KEY
     summonerInfo = JSON.parse(RestClient.get(url))
-    @user= User.create(summonerName: params[:summonerName], accountId: summonerInfo["accountId"], profileIconId: summonerInfo["profileIconId"], summonerLevel: summonerInfo["summonerLevel"])
+    @user= User.find_or_create_by(summonerName: summonerInfo["name"], accountId: summonerInfo["accountId"], profileIconId: summonerInfo["profileIconId"], summonerLevel: summonerInfo["summonerLevel"])
 
     render json: @user
 
@@ -22,7 +22,9 @@ class UsersController < ApplicationController
   end
 
   def show
+    @user = User.find(params[:id])
 
+    render json: @user
   end
 
   def update
