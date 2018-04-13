@@ -7,7 +7,27 @@ class UsersController < ApplicationController
     render json: @users
   end
 
-  def create
+  def sign_up
+
+    url = BASEURL + params[:summonerName] + "?api_key=" + API_KEY
+    summonerInfo = JSON.parse(RestClient.get(url))
+    @user= User.create(summonerName: summonerInfo["name"], accountId: summonerInfo["accountId"], profileIconId: summonerInfo["profileIconId"], summonerLevel: summonerInfo["summonerLevel"], email: user_params["email"])
+
+    render json: @user
+
+  end
+
+  def sign_in
+
+    url = BASEURL + params[:summonerName] + "?api_key=" + API_KEY
+    summonerInfo = JSON.parse(RestClient.get(url))
+    @user= User.find_by(summonerName: summonerInfo["name"], email: params[:email])
+
+    render json: @user
+
+  end
+
+  def fetch_user
 
     url = BASEURL + params[:summonerName] + "?api_key=" + API_KEY
     summonerInfo = JSON.parse(RestClient.get(url))
@@ -38,6 +58,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:summonerName)
+    params.require(:user).permit(:summonerName, :email)
   end
 end
