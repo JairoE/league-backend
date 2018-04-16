@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20180413204547) do
 
   create_table "matches", force: :cascade do |t|
     t.string "game_id"
+    t.text "game_info"
   end
 
   create_table "user_matches", force: :cascade do |t|
