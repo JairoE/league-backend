@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  API_KEY = "RGAPI-97b7709f-c97c-4bf7-8f73-252211443cbf"
+  API_KEY = "RGAPI-a921f358-b0db-4754-a474-2ce2c3ac2c62"
   BASEURL = "https://na1.api.riotgames.com/lol/summoner/v3/summoners/by-name/"
   def index
     @users = User.all
