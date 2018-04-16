@@ -3,7 +3,7 @@ class ChampionsController < ApplicationController
 
   URL = "https://na1.api.riotgames.com/lol/static-data/v3/champions?locale=en_US&dataById=false&api_key="
   API_KEY = "RGAPI-a921f358-b0db-4754-a474-2ce2c3ac2c62"
-  IMAGEURL = "https://ddragon.leagueoflegends.com/cdn/7.10.1/img/champion/"
+  IMAGEURL = "https://ddragon.leagueoflegends.com/cdn/8.7.1/img/champion/"
   def index
     @champs = Champion.all
 
