@@ -16,7 +16,10 @@ class MatchesController < ApplicationController
     @usermatches = UserMatch.where(user_id: @user.id)
     @matches = @usermatches.map do |usermatch|
                   Match.find(usermatch.match_id)
-                end
+                end.sort_by do |match|
+                  (match.game_id)
+                end.reverse
+
     render json: @matches
   end
 
