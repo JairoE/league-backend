@@ -1,6 +1,6 @@
 class MatchesController < ApplicationController
 
-  API_KEY = "RGAPI-a921f358-b0db-4754-a474-2ce2c3ac2c62"
+  API_KEY = "RGAPI-7a68b006-ea8d-4c23-86db-d78400453fcd"
   BASEURL = "https://na1.api.riotgames.com/lol/match/v3/matchlists/by-account/"
   MATCHBASEURL = "https://na1.api.riotgames.com/lol/match/v3/matches/"
 
@@ -18,7 +18,7 @@ class MatchesController < ApplicationController
                   Match.find(usermatch.match_id)
                 end.sort_by do |match|
                   (match.game_id)
-                end.reverse
+                end.reverse[0..16]
 
     render json: @matches
   end

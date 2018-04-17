@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20180416173937) do
 
   create_table "users", force: :cascade do |t|
     t.string "summonerName"
+    t.integer "summonerId"
     t.integer "accountId"
     t.integer "profileIconId"
     t.integer "summonerLevel"

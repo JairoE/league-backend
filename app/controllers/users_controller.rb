@@ -1,7 +1,9 @@
 class UsersController < ApplicationController
 
-  API_KEY = "RGAPI-a921f358-b0db-4754-a474-2ce2c3ac2c62"
+  API_KEY = "RGAPI-7a68b006-ea8d-4c23-86db-d78400453fcd"
   BASEURL = "https://na1.api.riotgames.com/lol/summoner/v3/summoners/by-name/"
+  RANKURL = "https://na1.api.riotgames.com/lol/league/v3/positions/by-summoner/"
+
   def index
     @users = User.all
     render json: @users
@@ -11,7 +13,7 @@ class UsersController < ApplicationController
 
     url = BASEURL + params[:summonerName] + "?api_key=" + API_KEY
     summonerInfo = JSON.parse(RestClient.get(url))
-    @user= User.create(summonerName: summonerInfo["name"], accountId: summonerInfo["accountId"], profileIconId: summonerInfo["profileIconId"], summonerLevel: summonerInfo["summonerLevel"], email: user_params["email"])
+    @user= User.create(summonerName: summonerInfo["name"], accountId: summonerInfo["accountId"], profileIconId: summonerInfo["profileIconId"], summonerLevel: summonerInfo["summonerLevel"], email: user_params["email"], summonerId: summonerInfo["id"])
 
     render json: @user
 
@@ -31,9 +33,19 @@ class UsersController < ApplicationController
 
     url = BASEURL + params[:summonerName] + "?api_key=" + API_KEY
     summonerInfo = JSON.parse(RestClient.get(url))
-    @user= User.find_or_create_by(summonerName: summonerInfo["name"], accountId: summonerInfo["accountId"], profileIconId: summonerInfo["profileIconId"], summonerLevel: summonerInfo["summonerLevel"])
+    @user= User.find_or_create_by(summonerName: summonerInfo["name"], accountId: summonerInfo["accountId"], profileIconId: summonerInfo["profileIconId"], summonerLevel: summonerInfo["summonerLevel"], summonerId: summonerInfo["id"])
 
     render json: @user
+
+  end
+
+  def fetch_rank
+    user = User.find(params[:id])
+    url = RANKURL + user["summonerId"].to_s + "?api_key=" + API_KEY
+    summonerInfo = JSON.parse(RestClient.get(url))
+
+    render json: summonerInfo
+
 
   end
 
