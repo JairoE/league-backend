@@ -7,26 +7,20 @@ class MatchesController < ApplicationController
   def index
     @user = User.find(params[:user_id])
     accountId = @user.accountId
-    url = BASEURL + accountId.to_s + '?api_key=' + API_KEY
+    url = BASEURL + accountId.to_s + '/recent?api_key=' + API_KEY
     json = JSON.parse(RestClient.get(url))
     matchList = json["matches"]
-    numOfGames = json["total"]
 
-    createMatches(matchList, @user)
-    @usermatches = UserMatch.where(user_id: @user.id)
-    @matches = @usermatches.map do |usermatch|
-                  Match.find(usermatch.match_id)
-                end.sort_by do |match|
-                  (match.game_id)
-                end.reverse[0..16]
+    @matches = createMatches(matchList, @user)
 
     render json: @matches
   end
 
   def createMatches(matchList, user)
     matchList.map do |match|
-      matchId = Match.find_or_create_by(game_id: match['gameId'].to_s)
-      UserMatch.find_or_create_by(match_id: matchId.id, user_id: user.id)
+      match = Match.find_or_create_by(game_id: match['gameId'].to_s)
+      UserMatch.find_or_create_by(match_id: match.id, user_id: user.id)
+      match
     end
   end
 

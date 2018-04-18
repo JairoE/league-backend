@@ -13,7 +13,7 @@ class UsersController < ApplicationController
 
     url = BASEURL + params[:summonerName] + "?api_key=" + API_KEY
     summonerInfo = JSON.parse(RestClient.get(url))
-    @user= User.create(summonerName: summonerInfo["name"], accountId: summonerInfo["accountId"], profileIconId: summonerInfo["profileIconId"], summonerLevel: summonerInfo["summonerLevel"], email: user_params["email"], summonerId: summonerInfo["id"])
+    @user= User.find_or_create_by(summonerName: summonerInfo["name"], accountId: summonerInfo["accountId"], profileIconId: summonerInfo["profileIconId"], summonerLevel: summonerInfo["summonerLevel"], email: user_params["email"], summonerId: summonerInfo["id"])
 
     render json: @user
 
