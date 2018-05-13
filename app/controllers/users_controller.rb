@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  API_KEY = "RGAPI-7a68b006-ea8d-4c23-86db-d78400453fcd"
+  API_KEY = "RGAPI-a1a853f0-9ed7-458a-8b2c-22426860fe0b"
   BASEURL = "https://na1.api.riotgames.com/lol/summoner/v3/summoners/by-name/"
   RANKURL = "https://na1.api.riotgames.com/lol/league/v3/positions/by-summoner/"
 
